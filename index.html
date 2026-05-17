@@ -352,7 +352,7 @@
                             </svg>
                         </div>
                         <p class="text-[8px] text-zinc-600 font-mono-rugged mt-3 text-center uppercase tracking-wider">
-                            🛡️ Built with soft safety attenuators. Max clean headroom verified.
+                            🛡️ Flip your phone's physical silent switch ON to hear audio in Safari.
                         </p>
                     </div>
 
@@ -698,12 +698,17 @@
             oscillator.start();
         }
 
-        synthPowerBtn.addEventListener('click', () => {
+        // Fixed Mobile-specific asynchronous launch pattern
+        synthPowerBtn.addEventListener('click', async () => {
             if (!isPowerOn) {
                 if (!audioCtx) {
                     initAudio();
-                } else if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
+                }
+                
+                // CRITICAL FIXED PATHWAY: Always explicitly resume context on user gesture.
+                // Mobile Safari and Chrome frequently lock newly created contexts as 'suspended'.
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    await audioCtx.resume();
                 }
                 
                 updateAudioParams();
@@ -719,7 +724,7 @@
                 drawScope();
             } else {
                 if (audioCtx) {
-                    audioCtx.suspend();
+                    await audioCtx.suspend();
                 }
                 isPowerOn = false;
                 synthPowerBtn.classList.add('bg-[#0f0f0f]', 'text-red-600', 'border-red-955');
