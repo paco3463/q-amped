@@ -35,12 +35,12 @@
             font-family: 'Courier Prime', monospace;
         }
 
-        /* Hero Background with elegant warm-tinted vignette overlay */
+        /* Hero Background with elegant warm-tinted vignette overlay (brighter) */
         .hero-bg {
-            background-image: linear-gradient(to bottom, rgba(7, 7, 7, 0.4), rgba(7, 7, 7, 0.98)), url('https://i.postimg.cc/j5wthKqS/1-54.jpg');
+            background-image: linear-gradient(to bottom, rgba(7, 7, 7, 0.15), rgba(7, 7, 7, 0.85)), url('https://i.postimg.cc/j5wthKqS/1-54.jpg');
             background-size: cover;
             background-position: center 30%;
-            filter: grayscale(100%) contrast(115%) brightness(90%);
+            filter: grayscale(100%) contrast(110%) brightness(135%);
         }
 
         /* LUXURY TUBE GLOW POWER-ON STROBE ANIMATION */
@@ -161,7 +161,7 @@
     <section class="relative min-h-screen flex flex-col justify-end lg:justify-center items-center px-4 md:px-8 pt-32 pb-20 overflow-hidden">
         <!-- Background Layer with luxury warm vignette -->
         <div class="absolute inset-0 hero-bg z-0"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-[#070707]/90 z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/10 to-[#070707]/90 z-10"></div>
 
         <!-- Hero Content container -->
         <div class="relative z-20 w-full max-w-5xl flex flex-col items-center text-center space-y-10">
@@ -182,7 +182,8 @@
                 </p>
             </div>
 
-            <p class="max-w-xl text-xs md:text-sm text-zinc-400 font-light leading-relaxed tracking-wider bg-black/85 px-6 py-5 border border-zinc-900/60 backdrop-blur-md">
+            <!-- Clean floating paragraph text with no box under subtexts -->
+            <p class="max-w-xl text-xs md:text-sm text-zinc-300 font-light leading-relaxed tracking-wider drop-shadow-md">
                 Dedicated exclusively to the premium restoration of professional guitar amplifiers and vintage tube electronics. Every chassis is serviced to pristine audio specification, preserving original components where vital, and stabilizing circuit bias with absolute precision.
             </p>
 
@@ -352,7 +353,7 @@
                             </svg>
                         </div>
                         <p class="text-[8px] text-zinc-600 font-mono-rugged mt-3 text-center uppercase tracking-wider">
-                            🛡️ Flip your phone's physical silent switch ON to hear audio in Safari.
+                            🛡️ Check ringer hardware toggle state & media volume level.
                         </p>
                     </div>
 
@@ -677,8 +678,26 @@
             return curve;
         }
 
-        function initAudio() {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        // Fully restructured synchronous initializing pattern with forced sample player unlock
+        async function initAudio() {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContextClass();
+            
+            // Immediately resume state synchronously inside the execution block
+            if (audioCtx.state === 'suspended') {
+                await audioCtx.resume();
+            }
+
+            // Chrome/Android Web Audio API hardware system bypass - injects and plays a silent sample to wake up output channels
+            try {
+                const buffer = audioCtx.createBuffer(1, 1, 22050);
+                const source = audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(audioCtx.destination);
+                source.start(0);
+            } catch (err) {
+                console.warn("Silent audio wake-up injection bypassed:", err);
+            }
             
             oscillator = audioCtx.createOscillator();
             oscillator.type = 'sawtooth';
@@ -698,30 +717,33 @@
             oscillator.start();
         }
 
-        // Fixed Mobile-specific asynchronous launch pattern
+        // Fixed Chrome & Android synchronous launch event
         synthPowerBtn.addEventListener('click', async () => {
             if (!isPowerOn) {
-                if (!audioCtx) {
-                    initAudio();
-                }
-                
-                // CRITICAL FIXED PATHWAY: Always explicitly resume context on user gesture.
-                // Mobile Safari and Chrome frequently lock newly created contexts as 'suspended'.
-                if (audioCtx && audioCtx.state === 'suspended') {
-                    await audioCtx.resume();
-                }
-                
-                updateAudioParams();
+                try {
+                    if (!audioCtx) {
+                        await initAudio();
+                    } else {
+                        // Resubmitting active state request directly inside the user action thread
+                        if (audioCtx.state === 'suspended') {
+                            await audioCtx.resume();
+                        }
+                    }
+                    
+                    updateAudioParams();
 
-                isPowerOn = true;
-                synthPowerBtn.classList.add('bg-[#1f0f0f]', 'text-red-500', 'border-red-500');
-                synthPowerBtn.classList.remove('bg-[#0f0f0f]', 'text-red-600', 'border-red-955');
-                synthPowerText.innerText = "CHASSIS LIVE";
-                waveVisual.innerText = "SWEEPING SIGNAL";
-                waveVisual.classList.add('text-[#d4af37]');
-                waveVisual.classList.remove('text-zinc-600');
+                    isPowerOn = true;
+                    synthPowerBtn.classList.add('bg-[#1f0f0f]', 'text-red-500', 'border-red-500');
+                    synthPowerBtn.classList.remove('bg-[#0f0f0f]', 'text-red-600', 'border-red-955');
+                    synthPowerText.innerText = "CHASSIS LIVE";
+                    waveVisual.innerText = "SWEEPING SIGNAL";
+                    waveVisual.classList.add('text-[#d4af37]');
+                    waveVisual.classList.remove('text-zinc-600');
 
-                drawScope();
+                    drawScope();
+                } catch (audioInitError) {
+                    console.error("Chrome Audio Pipeline failed to initialize:", audioInitError);
+                }
             } else {
                 if (audioCtx) {
                     await audioCtx.suspend();
