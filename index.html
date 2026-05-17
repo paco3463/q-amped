@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q FIXES AMPS | Bespoke Valve Audio Restoration</title>
+    
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for rugged technical details -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for sleek outline icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for clean 3D blueprint simulation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* Luxury Swiss Audio Aesthetics utilizing Helvetica */
+        body {
+            background-color: #070707;
+            color: #e5e5e7;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            letter-spacing: 0.04em;
+        }
+
+        /* Set all headings to clean Swiss Helvetica */
+        .font-serif-lux {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .font-mono-rugged {
+            font-family: 'Courier Prime', monospace;
+        }
+
+        /* Hero Background with elegant warm-tinted vignette overlay */
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(7, 7, 7, 0.4), rgba(7, 7, 7, 0.98)), url('https://i.postimg.cc/j5wthKqS/1-54.jpg');
+            background-size: cover;
+            background-position: center 30%;
+            filter: grayscale(100%) contrast(115%) brightness(90%);
+        }
+
+        /* LUXURY TUBE GLOW POWER-ON STROBE ANIMATION */
+        @keyframes tube-warm-up {
+            0% { opacity: 0; text-shadow: 0 0 0px rgba(212, 175, 55, 0); color: #222; }
+            4% { opacity: 0.3; text-shadow: 0 0 10px rgba(255, 122, 0, 0.3); color: #7f5c1d; }
+            6% { opacity: 0.1; text-shadow: none; color: #222; }
+            12% { opacity: 0.9; text-shadow: 0 0 25px rgba(255, 122, 0, 0.8), 0 0 50px rgba(212, 175, 55, 0.5); color: #fff; }
+            15% { opacity: 0.2; text-shadow: none; color: #555; }
+            20% { opacity: 1; text-shadow: 0 0 15px rgba(255, 95, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.6); color: #fdfaf2; }
+            60% { opacity: 0.9; text-shadow: 0 0 12px rgba(255, 95, 0, 0.7); }
+            62% { opacity: 0.75; }
+            65% { opacity: 1; text-shadow: 0 0 20px rgba(255, 95, 0, 0.95), 0 0 60px rgba(212, 175, 55, 0.8); color: #fffdf9; }
+            100% { opacity: 1; text-shadow: 0 0 8px rgba(255, 130, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.4); color: #f6ebd4; }
+        }
+
+        .strobe-text {
+            animation: tube-warm-up 3s ease-out forwards;
+        }
+
+        /* Brushed brass metal faceplate badge style */
+        .brass-badge {
+            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 50%, #f3e5ab 100%);
+            color: #0d0d0d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.4);
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            border: 1px solid #7c5a0b;
+            position: relative;
+        }
+
+        .brass-badge::before, .brass-badge::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #444;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+        }
+        .brass-badge::before { left: 8px; }
+        .brass-badge::after { right: 8px; }
+
+        /* Premium Chassis Panel Aesthetics */
+        .premium-panel {
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.98) 100%);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .premium-panel::before {
+            content: '';
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.05);
+            pointer-events: none;
+        }
+
+        /* Gold metallic accent lines */
+        .gold-accent {
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            height: 1px;
+            width: 100%;
+            opacity: 0.3;
+        }
+
+        /* Audio Pilot light indicators */
+        .pilot-amber {
+            width: 10px;
+            height: 10px;
+            background-color: #ff5f00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff5f00, 0 0 20px #ff3e00;
+            animation: tube-filament-pulse 5s infinite ease-in-out;
+        }
+
+        @keyframes tube-filament-pulse {
+            0%, 100% { opacity: 0.95; filter: brightness(1); }
+            50% { opacity: 0.75; filter: brightness(0.8); }
+        }
+
+        /* Sleek luxury custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070707;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b261a;
+            border-radius: 0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen text-gray-300 selection:bg-amber-600 selection:text-black">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="absolute top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center bg-gradient-to-b from-black/95 to-transparent">
+        <div class="flex items-center space-x-3">
+            <span class="pilot-amber"></span>
+            <span class="font-serif-lux text-[10px] tracking-[0.25em] text-[#d4af37] font-bold uppercase">Q VALVES &bull; LAB ACTIVE</span>
+        </div>
+        <div class="flex items-center space-x-8">
+            <a href="#bench" class="hover:text-[#d4af37] font-serif-lux text-[10px] tracking-widest font-semibold transition duration-300">DIAGRAM</a>
+            <a href="#signals" class="hover:text-[#d4af37] font-serif-lux text-[10px] tracking-widest font-semibold transition duration-300">VALVE TEST</a>
+            <a href="#services" class="hover:text-[#d4af37] font-serif-lux text-[10px] tracking-widest font-semibold transition duration-300">SERVICES</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex flex-col justify-end lg:justify-center items-center px-4 md:px-8 pt-32 pb-20 overflow-hidden">
+        <!-- Background Layer with luxury warm vignette -->
+        <div class="absolute inset-0 hero-bg z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-[#070707]/90 z-10"></div>
+
+        <!-- Hero Content container -->
+        <div class="relative z-20 w-full max-w-5xl flex flex-col items-center text-center space-y-10">
+            
+            <!-- Brass Metal Badge -->
+            <div class="brass-badge px-10 py-2.5 text-[11px] uppercase tracking-[0.25em] shadow-2xl mb-2 font-bold">
+                VALVE & SOLID STATE RESTORATION
+            </div>
+
+            <!-- Stroboscopic Warm Tube Header -->
+            <div class="space-y-4">
+                <h1 class="strobe-text font-serif-lux text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] tracking-tight font-black leading-none uppercase">
+                    Q FIXES AMPS
+                </h1>
+                <div class="gold-accent max-w-lg mx-auto"></div>
+                <p class="font-serif-lux text-[#d4af37] text-xs md:text-sm tracking-[0.3em] font-medium uppercase">
+                    High-Voltage Bench Work &bull; Fine Audio Craft
+                </p>
+            </div>
+
+            <p class="max-w-xl text-xs md:text-sm text-zinc-400 font-light leading-relaxed tracking-wider bg-black/85 px-6 py-5 border border-zinc-900/60 backdrop-blur-md">
+                Dedicated exclusively to the premium restoration of professional guitar amplifiers and vintage tube electronics. Every chassis is serviced to pristine audio specification, preserving original components where vital, and stabilizing circuit bias with absolute precision.
+            </p>
+
+            <!-- LUXURY SCHEDULE CONSULTATION BUTTON -->
+            <div class="pt-2 pb-6">
+                <!-- Links to text 954-348-7172 with body "HEY CUTIE CAN YOU FIX MY AMP" -->
+                <a href="sms:+19543487172?&body=HEY%20CUTIE%20CAN%20YOU%20FIX%20MY%20AMP" 
+                   onclick="copyToClipboardFallback();"
+                   class="inline-flex items-center space-x-4 px-10 py-5 bg-gradient-to-r from-[#1a1813] to-[#0a0a0a] hover:from-[#d4af37] hover:to-[#c5a059] text-[#d4af37] hover:text-black font-bold font-serif-lux text-xs tracking-[0.2em] rounded-none uppercase transform hover:scale-105 transition-all duration-300 shadow-[0_15px_35px_rgba(0,0,0,0.6)] border border-[#d4af37]">
+                    <i class="fa-solid fa-feather-pointed text-sm"></i>
+                    <span>SCHEDULE CONSULTATION</span>
+                </a>
+                <p class="text-[9px] text-zinc-500 font-mono-rugged mt-4 uppercase tracking-[0.15em]">
+                    Direct Connection: 954-348-7172 &bull; Encrypted SMS Line
+                </p>
+            </div>
+
+            <!-- Custom Notification Modal for Desktop fallbacks -->
+            <div id="toast-notif" class="hidden fixed bottom-6 right-6 bg-[#0d0d0d] border border-[#d4af37] text-white font-mono-rugged p-5 z-50 shadow-[0_20px_40px_rgba(0,0,0,0.8)] max-w-sm">
+                <div class="flex items-start space-x-3">
+                    <i class="fa-solid fa-compass-drafting text-[#d4af37] text-lg mt-0.5 animate-pulse"></i>
+                    <div>
+                        <h4 class="font-bold text-xs uppercase tracking-widest text-[#d4af37] font-serif-lux">AUDIO CLIENT ROUTE</h4>
+                        <p class="text-[10px] text-zinc-400 mt-1 leading-relaxed">System copied "954-348-7172". Text "HEY CUTIE CAN YOU FIX MY AMP" to initiate high-voltage consultation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Animated downward indicator -->
+            <div class="pt-8">
+                <a href="#bench" class="text-zinc-600 hover:text-[#d4af37] transition duration-300">
+                    <span class="block text-[9px] uppercase tracking-[0.25em] font-serif-lux mb-2 text-zinc-500 font-semibold">3D Vector & Diagnostics</span>
+                    <i class="fa-solid fa-chevron-down text-sm animate-bounce"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D BLUEPRINT SECTION (MARSHALL STACK) -->
+    <section id="bench" class="relative py-28 bg-[#090909] border-t border-zinc-900">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            
+            <!-- Left Info Panel -->
+            <div class="lg:col-span-5 space-y-6">
+                <span class="text-[10px] text-[#d4af37] uppercase tracking-[0.2em] font-serif-lux block font-bold">RECONSTRUCTION DRAWINGS</span>
+                <h2 class="text-3xl md:text-4xl font-light tracking-tight text-white uppercase font-serif-lux leading-tight">
+                    The Marshall Stack <br><span class="text-[#d4af37] font-bold">Vector Blueprint</span>
+                </h2>
+                <div class="gold-accent"></div>
+                <p class="text-zinc-400 text-xs md:text-sm leading-relaxed font-light tracking-wide">
+                    A visual projection of the classic 100W Super Lead Plexi dual-cabinet setup. Components are restored under clean, clinical workspace conditions to preserve vintage response.
+                </p>
+                
+                <div class="p-5 bg-black/60 border border-zinc-900/80 rounded-none">
+                    <h3 class="text-[#d4af37] font-bold uppercase text-[10px] tracking-widest mb-3 font-serif-lux">LAB DIAGNOSTICS</h3>
+                    <ul class="space-y-3.5 text-xs font-mono-rugged text-zinc-400">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                <span>Grid Leak Resistance</span>
+                            </span>
+                            <span class="text-zinc-600">PASS</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                <span>Filter Capacitance Delta</span>
+                            </span>
+                            <span class="text-zinc-600">&lt; 0.02%</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                <span>Optimal Tube Match Ratio</span>
+                            </span>
+                            <span class="text-amber-500">CALIBRATING</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right 3D Wireframe Canvas Container -->
+            <div class="lg:col-span-7 flex flex-col items-center">
+                <!-- Clean premium panel outline -->
+                <div id="canvas-parent" class="relative w-full aspect-square md:aspect-[4/3] max-h-[500px] premium-panel rounded-none overflow-hidden bg-black/80">
+                    
+                    <!-- Clean Luxury UI Corners -->
+                    <div class="absolute top-3 left-3 text-zinc-600 text-[9px] tracking-widest font-mono-rugged">PLX-1959_CAD</div>
+                    <div class="absolute top-3 right-3 text-zinc-600 text-[9px] tracking-widest font-mono-rugged">VECTORS: ACTIVE</div>
+                    <div class="absolute bottom-3 left-3 text-zinc-600 text-[9px] tracking-widest font-mono-rugged">AUTO-ORBIT: CINEMATIC</div>
+                    <div class="absolute bottom-3 right-3 flex items-center space-x-2 bg-black/60 px-3 py-1 border border-zinc-900">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#d4af37] animate-pulse"></span>
+                        <span class="text-[9px] text-[#d4af37] tracking-widest font-serif-lux uppercase font-bold">GLIDE RENDER</span>
+                    </div>
+
+                    <!-- CANVAS FOR THREE.JS -->
+                    <canvas id="three-wireframe-canvas" class="w-full h-full pointer-events-none"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WEB AUDIO SIGNAL GENERATOR & VALVE CLIPPING TESTER -->
+    <section id="signals" class="relative py-24 bg-[#070707] border-t border-zinc-900">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center space-y-4 mb-16">
+                <span class="text-[10px] text-[#d4af37] uppercase tracking-[0.25em] font-serif-lux block font-bold">ANALOG EMULATION TEST BENCH</span>
+                <h2 class="text-3xl md:text-4xl font-light tracking-tight text-white uppercase font-serif-lux">
+                    Valve Clipping Simulator
+                </h2>
+                <div class="gold-accent max-w-sm mx-auto"></div>
+                <p class="text-xs text-zinc-400 max-w-lg mx-auto leading-relaxed tracking-wide font-light">
+                    Initiate an active signal sweep to evaluate harmonics. Set your desired benchmark frequency and engage the analog bias clipper below.
+                </p>
+            </div>
+
+            <!-- Interactive Console Panel -->
+            <div class="premium-panel p-6 md:p-10 rounded-none border border-zinc-800/80 max-w-3xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    
+                    <!-- Controls Column -->
+                    <div class="space-y-8">
+                        <!-- Power Toggle -->
+                        <div>
+                            <label class="block text-[10px] uppercase text-zinc-500 font-serif-lux tracking-[0.2em] mb-3 font-bold">SYSTEM CHASSIS POWER</label>
+                            <button id="synth-power" class="w-full py-4 px-6 bg-[#0f0f0f] hover:bg-[#1a1a1a] text-red-600 hover:text-red-500 border border-red-955 hover:border-red-800 text-xs font-bold font-serif-lux tracking-[0.25em] transition-all duration-300 flex items-center justify-center space-x-3 uppercase">
+                                <i class="fa-solid fa-power-off text-sm"></i>
+                                <span id="synth-power-text">STANDBY OFF</span>
+                            </button>
+                        </div>
+
+                        <!-- Frequency Knob / Slider -->
+                        <div>
+                            <div class="flex justify-between text-[10px] font-serif-lux text-zinc-400 mb-2 tracking-widest font-bold">
+                                <span>OSCILLATOR FREQUENCY</span>
+                                <span id="freq-val" class="text-[#d4af37] font-bold">220 Hz</span>
+                            </div>
+                            <input type="range" id="freq-slider" min="60" max="880" value="220" class="w-full h-1 bg-zinc-800 appearance-none cursor-pointer accent-[#d4af37]">
+                        </div>
+
+                        <!-- Distortion Drive Knob / Slider -->
+                        <div>
+                            <div class="flex justify-between text-[10px] font-serif-lux text-zinc-400 mb-2 tracking-widest font-bold">
+                                <span>TUBE SATURATION (CLIP)</span>
+                                <span id="dist-val" class="text-[#d4af37] font-bold">CLEAN LINE</span>
+                            </div>
+                            <input type="range" id="dist-slider" min="0" max="100" value="0" class="w-full h-1 bg-zinc-800 appearance-none cursor-pointer accent-[#d4af37]">
+                        </div>
+                    </div>
+
+                    <!-- Graph / Grid Column representing Oscilloscope -->
+                    <div class="h-full flex flex-col justify-center">
+                        <label class="block text-[10px] uppercase text-zinc-500 font-serif-lux tracking-[0.2em] mb-3 text-center md:text-left font-bold">ANALOG OUT MONITOR</label>
+                        <div class="relative aspect-video bg-black/90 border border-zinc-900 p-2 overflow-hidden flex flex-col items-center justify-center">
+                            <!-- Reticle grid lines -->
+                            <div class="absolute inset-0 bg-[linear-gradient(rgba(212,175,55,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(212,175,55,0.03)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+                            
+                            <!-- Glowing oscilloscope representation -->
+                            <div class="z-10 text-center pointer-events-none">
+                                <div id="wave-visual" class="text-[#d4af37] font-serif-lux text-xs tracking-[0.2em] uppercase mb-1 font-bold">STBY</div>
+                                <div class="text-[8px] text-zinc-600 font-mono-rugged">SWEPT SPECTRUM ANALYSES</div>
+                            </div>
+
+                            <!-- Animated vector wave line -->
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-80" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <path id="scope-path" d="M0,50 L100,50" stroke="#d4af37" stroke-width="1.5" fill="none" />
+                            </svg>
+                        </div>
+                        <p class="text-[8px] text-zinc-600 font-mono-rugged mt-3 text-center uppercase tracking-wider">
+                            🛡️ Built with soft safety attenuators. Max clean headroom verified.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE REPAIR SERVICES -->
+    <section id="services" class="relative py-24 bg-zinc-950/70 border-t border-zinc-900">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- Service Card 1 -->
+                <div class="premium-panel p-8 flex flex-col justify-between hover:border-[#d4af37]/40 transition duration-500">
+                    <div class="space-y-4">
+                        <div class="text-[#d4af37] text-2xl">
+                            <i class="fa-solid fa-dharmachakra"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-serif-lux uppercase tracking-wider text-white">Tube Matched Calibration</h3>
+                        <div class="gold-accent"></div>
+                        <p class="text-zinc-400 text-xs font-light leading-relaxed tracking-wide">
+                            Careful matching of power tube quadrants, bias sweep calibration, and signal testing to establish the perfect harmonic envelope for boutique head models.
+                        </p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-zinc-900/60 flex justify-between items-center text-[9px] font-mono-rugged text-zinc-500">
+                        <span>PRECISION WORK</span>
+                        <i class="fa-solid fa-fingerprint text-[#d4af37]"></i>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="premium-panel p-8 flex flex-col justify-between hover:border-[#d4af37]/40 transition duration-500">
+                    <div class="space-y-4">
+                        <div class="text-[#d4af37] text-2xl">
+                            <i class="fa-solid fa-bezier-curve"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-serif-lux uppercase tracking-wider text-white">Component Recapping</h3>
+                        <div class="gold-accent"></div>
+                        <p class="text-zinc-400 text-xs font-light leading-relaxed tracking-wide">
+                            Replacement of aging capacitors with high-end, period-correct components (Mallory, Sprague Atom, SoZo) ensuring low-noise floor and tight power delivery.
+                        </p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-zinc-900/60 flex justify-between items-center text-[9px] font-mono-rugged text-zinc-500">
+                        <span>AUDIO SPECIFIABLE</span>
+                        <i class="fa-solid fa-sliders text-[#d4af37]"></i>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="premium-panel p-8 flex flex-col justify-between hover:border-[#d4af37]/40 transition duration-500">
+                    <div class="space-y-4">
+                        <div class="text-[#d4af37] text-2xl">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-serif-lux uppercase tracking-wider text-white">Chassis Modification</h3>
+                        <div class="gold-accent"></div>
+                        <p class="text-zinc-400 text-xs font-light leading-relaxed tracking-wide">
+                            Precision mechanical mods including secondary Master Volume implementations, transformer replacements, and custom switch cascades without compromising structural integrity.
+                        </p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-zinc-900/60 flex justify-between items-center text-[9px] font-mono-rugged text-zinc-500">
+                        <span>RETROFIT DESIGN</span>
+                        <i class="fa-solid fa-compass-drafting text-[#d4af37]"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="relative bg-black py-20 border-t border-zinc-900 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+            <div>
+                <h3 class="font-serif-lux text-2xl text-white tracking-widest font-black">Q FIXES AMPS</h3>
+                <p class="font-serif-lux text-[9px] text-[#d4af37] uppercase tracking-[0.25em] mb-4 font-bold">Underground Valve Laboratories</p>
+                <p class="font-light text-xs text-zinc-400 max-w-sm leading-relaxed tracking-wide">
+                    Servicing legendary stage gear and bespoke studio electronics. Fully equipped high-voltage workspace designed to optimize modern classics and pure vintage layouts.
+                </p>
+            </div>
+            
+            <div class="flex flex-col space-y-4 md:items-end">
+                <a href="sms:+19543487172?&body=HEY%20CUTIE%20CAN%20YOU%20FIX%20MY%20AMP" 
+                   onclick="copyToClipboardFallback();"
+                   class="inline-block px-8 py-3 bg-[#0a0a0a] border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black font-serif-lux text-[10px] tracking-widest font-bold uppercase transition duration-300 text-center md:text-right">
+                    SECURE DIAL: 954-348-7172
+                </a>
+                <p class="text-[9px] text-zinc-600 font-mono-rugged text-center md:text-right uppercase tracking-wider">
+                    &copy; 2026 Q FIXES AMPS. CERTIFIED HIGH-VOLTAGE OPERATION. ALL VALUE MATTERS.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Subtle luxury gold baseplate line -->
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-700 via-[#d4af37] to-yellow-900"></div>
+    </footer>
+
+    <!-- INTERACTION & RENDERING LOGIC -->
+    <script>
+        // Copy-to-clipboard fallback for desktop environments
+        function copyToClipboardFallback() {
+            const rawNum = "9543487172";
+            const tempEl = document.createElement('textarea');
+            tempEl.value = rawNum;
+            document.body.appendChild(tempEl);
+            tempEl.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempEl);
+
+            // Show customized brass notification toast
+            const toast = document.getElementById('toast-notif');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 8000);
+        }
+
+        // ==================================================
+        // 3D MARSHALL AMP VECTOR BLUEPRINT (THREE.JS)
+        // ==================================================
+        let scene, camera, renderer, ampStack;
+        let canvas = document.getElementById('three-wireframe-canvas');
+        let parentContainer = document.getElementById('canvas-parent');
+
+        function init3D() {
+            // Scene Setup
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x090909, 0.08);
+
+            // Camera Setup
+            camera = new THREE.PerspectiveCamera(45, parentContainer.clientWidth / parentContainer.clientHeight, 0.1, 100);
+            camera.position.set(0, 0, 9.5);
+
+            // Renderer Setup
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(parentContainer.clientWidth, parentContainer.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Create Marshall Amp Stack Group
+            ampStack = new THREE.Group();
+
+            // Elegant Thin Wireframe Line Materials
+            const goldMaterial = new THREE.LineBasicMaterial({
+                color: 0xd4af37, // Sleek brushed brass
+                transparent: true,
+                opacity: 0.85
+            });
+
+            const amberMaterial = new THREE.LineBasicMaterial({
+                color: 0xff7300, // Heated tube filament amber
+                transparent: true,
+                opacity: 0.6
+            });
+
+            // Helper function to convert Box to Clean Vector Lines
+            function createCleanBoxLines(width, height, depth, material) {
+                const geometry = new THREE.BoxGeometry(width, height, depth);
+                const edges = new THREE.EdgesGeometry(geometry);
+                return new THREE.LineSegments(edges, material);
+            }
+
+            // 1. Marshall Head Unit (Top Chassis Box)
+            const headMesh = createCleanBoxLines(3.6, 1.2, 1.3, goldMaterial);
+            headMesh.position.y = 1.6;
+            ampStack.add(headMesh);
+
+            // Head Handle (Top center)
+            const handleMesh = createCleanBoxLines(0.8, 0.1, 0.2, goldMaterial);
+            handleMesh.position.set(0, 2.25, 0);
+            ampStack.add(handleMesh);
+
+            // Control Faceplate Area (Inner glowing panel lines)
+            const faceplateMesh = createCleanBoxLines(3.2, 0.4, 0.1, amberMaterial);
+            faceplateMesh.position.set(0, 1.5, 0.61);
+            ampStack.add(faceplateMesh);
+
+            // Cylindrical Gold Dials / Knobs
+            for (let i = 0; i < 6; i++) {
+                const geom = new THREE.CylinderGeometry(0.05, 0.05, 0.08, 6);
+                const edges = new THREE.EdgesGeometry(geom);
+                const knob = new THREE.LineSegments(edges, goldMaterial);
+                knob.rotation.x = Math.PI / 2;
+                knob.position.set(-1.0 + (i * 0.4), 1.5, 0.67);
+                ampStack.add(knob);
+            }
+
+            // 2. Slanted Top Cabinet (Beautiful angled outlines)
+            const cabAngledGeo = new THREE.BufferGeometry();
+            const w = 1.8; // half width
+            const h = 1.0; // half height
+            const dBack = 0.75; // half depth back
+            const dFrontBottom = 0.75; // depth front bottom
+            const dFrontTop = 0.50; // depth front top (slanted back)
+
+            // Vertices coordinate definitions
+            const vertices = new Float32Array([
+                // Bottom panel outline
+                -w, -h, dFrontBottom,  w, -h, dFrontBottom,
+                 w, -h, dFrontBottom,  w, -h, -dBack,
+                 w, -h, -dBack,       -w, -h, -dBack,
+                -w, -h, -dBack,       -w, -h, dFrontBottom,
+
+                // Top panel outline (slanted inwards on front)
+                -w,  h, dFrontTop,     w,  h, dFrontTop,
+                 w,  h, dFrontTop,     w,  h, -dBack,
+                 w,  h, -dBack,       -w,  h, -dBack,
+                -w,  h, -dBack,       -w,  h, dFrontTop,
+
+                // Upright corner pillars
+                -w, -h, dFrontBottom, -w,  h, dFrontTop,
+                 w, -h, dFrontBottom,  w,  h, dFrontTop,
+                 w, -h, -dBack,        w,  h, -dBack,
+                -w, -h, -dBack,       -w,  h, -dBack
+            ]);
+
+            cabAngledGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+            const cabAngledLine = new THREE.LineSegments(cabAngledGeo, goldMaterial);
+            cabAngledLine.position.y = 0.0;
+            ampStack.add(cabAngledLine);
+
+            // Golden speaker grill plane indicator line
+            const topGrillGeo = new THREE.BufferGeometry();
+            const gw = 1.6;
+            const gh = 0.8;
+            const grillVertices = new Float32Array([
+                -gw, -gh, 0.72,  gw, -gh, 0.72,
+                 gw, -gh, 0.72,  gw,  gh, 0.52,
+                 gw,  gh, 0.52, -gw,  gh, 0.52,
+                -gw,  gh, 0.52, -gw, -gh, 0.72
+            ]);
+            topGrillGeo.setAttribute('position', new THREE.BufferAttribute(grillVertices, 3));
+            const topGrillMesh = new THREE.LineSegments(topGrillGeo, amberMaterial);
+            ampStack.add(topGrillMesh);
+
+            // 3. Straight Bottom Cabinet
+            const cabStraightMesh = createCleanBoxLines(3.6, 2.0, 1.5, goldMaterial);
+            cabStraightMesh.position.y = -2.1;
+            ampStack.add(cabStraightMesh);
+
+            // Bottom grill panel line
+            const bottomGrillMesh = createCleanBoxLines(3.2, 1.7, 0.02, amberMaterial);
+            bottomGrillMesh.position.set(0, -2.1, 0.76);
+            ampStack.add(bottomGrillMesh);
+
+            // Sleek structural castor base pins (Wheels)
+            for (let x of [-1.5, 1.5]) {
+                for (let z of [-0.5, 0.5]) {
+                    const castor = createCleanBoxLines(0.15, 0.2, 0.15, goldMaterial);
+                    castor.position.set(x, -3.2, z);
+                    ampStack.add(castor);
+                }
+            }
+
+            // Insert whole assembly
+            scene.add(ampStack);
+
+            // Clean initial cinematic tilt
+            ampStack.rotation.y = 0.4;
+            ampStack.rotation.x = 0.1;
+            ampStack.position.y = 0.2;
+
+            // Trigger window resize immediately once to calculate perfect dimensions
+            onWindowResize();
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function onWindowResize() {
+            const width = parentContainer.clientWidth || 300;
+            const height = parentContainer.clientHeight || 300;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        // Cinematic Graceful Auto-Spin loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Elegant, slow cinematic rotation
+            ampStack.rotation.y += 0.0028;
+
+            renderer.render(scene, camera);
+        }
+
+        // Initialize 3D on load
+        window.addEventListener('DOMContentLoaded', () => {
+            init3D();
+            animate();
+            setTimeout(onWindowResize, 100);
+        });
+
+
+        // ==================================================
+        // WEB AUDIO BENCH SIMULATOR (VALVE CLIPPING)
+        // ==================================================
+        let audioCtx = null;
+        let oscillator = null;
+        let distNode = null;
+        let gainNode = null;
+        let isPowerOn = false;
+
+        const synthPowerBtn = document.getElementById('synth-power');
+        const synthPowerText = document.getElementById('synth-power-text');
+        const freqSlider = document.getElementById('freq-slider');
+        const freqVal = document.getElementById('freq-val');
+        const distSlider = document.getElementById('dist-slider');
+        const distVal = document.getElementById('dist-val');
+        const waveVisual = document.getElementById('wave-visual');
+        const scopePath = document.getElementById('scope-path');
+
+        // Elegant tube soft-clipping curve generator
+        function makeDistortionCurve(amount) {
+            const k = typeof amount === 'number' ? amount : 50;
+            const n_samples = 44100;
+            const curve = new Float32Array(n_samples);
+            const deg = Math.PI / 180;
+            for (let i = 0; i < n_samples; ++i) {
+                const x = (i * 2) / n_samples - 1;
+                curve[i] = ((3 + k) * x * 15 * deg) / (Math.PI + k * Math.abs(x));
+            }
+            return curve;
+        }
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            
+            oscillator = audioCtx.createOscillator();
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(parseFloat(freqSlider.value), audioCtx.currentTime);
+
+            distNode = audioCtx.createWaveShaper();
+            distNode.curve = makeDistortionCurve(parseFloat(distSlider.value));
+            distNode.oversample = '4x';
+
+            gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
+
+            oscillator.connect(distNode);
+            distNode.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start();
+        }
+
+        synthPowerBtn.addEventListener('click', () => {
+            if (!isPowerOn) {
+                if (!audioCtx) {
+                    initAudio();
+                } else if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                updateAudioParams();
+
+                isPowerOn = true;
+                synthPowerBtn.classList.add('bg-[#1f0f0f]', 'text-red-500', 'border-red-500');
+                synthPowerBtn.classList.remove('bg-[#0f0f0f]', 'text-red-600', 'border-red-955');
+                synthPowerText.innerText = "CHASSIS LIVE";
+                waveVisual.innerText = "SWEEPING SIGNAL";
+                waveVisual.classList.add('text-[#d4af37]');
+                waveVisual.classList.remove('text-zinc-600');
+
+                drawScope();
+            } else {
+                if (audioCtx) {
+                    audioCtx.suspend();
+                }
+                isPowerOn = false;
+                synthPowerBtn.classList.add('bg-[#0f0f0f]', 'text-red-600', 'border-red-955');
+                synthPowerBtn.classList.remove('bg-[#1f0f0f]', 'text-red-500', 'border-red-500');
+                synthPowerText.innerText = "STANDBY OFF";
+                waveVisual.innerText = "STBY";
+                waveVisual.classList.add('text-zinc-600');
+                waveVisual.classList.remove('text-[#d4af37]');
+                scopePath.setAttribute('d', 'M0,50 L100,50'); // Flatline
+            }
+        });
+
+        freqSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            freqVal.innerText = `${val} Hz`;
+            updateAudioParams();
+        });
+
+        distSlider.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            let rating = "CLEAN LINE";
+            if (val > 0 && val <= 30) rating = "RICH SATURATION";
+            else if (val > 30 && val <= 70) rating = "HARMONIC CLIPPING";
+            else if (val > 70) rating = "ASYMMETRIC BLOWN CLIP";
+            distVal.innerText = rating;
+            updateAudioParams();
+        });
+
+        function updateAudioParams() {
+            if (!audioCtx || !isPowerOn) return;
+            oscillator.frequency.setValueAtTime(parseFloat(freqSlider.value), audioCtx.currentTime);
+            distNode.curve = makeDistortionCurve(parseFloat(distSlider.value));
+        }
+
+        // Draw elegant amber vectors on simulated scope
+        let scopeAngle = 0;
+        function drawScope() {
+            if (!isPowerOn) return;
+
+            const freq = parseFloat(freqSlider.value);
+            const distortion = parseInt(distSlider.value);
+            
+            let points = [];
+            const width = 100;
+            const height = 100;
+            const step = 2;
+
+            for (let x = 0; x <= width; x += step) {
+                const radians = (x / width) * Math.PI * 4 * (freq / 220) + scopeAngle;
+                let yVal = Math.sin(radians);
+                
+                yVal += (Math.abs(Math.sin(radians * 1.5)) - 0.5) * 0.25;
+
+                if (distortion > 0) {
+                    const threshold = 1 - (distortion / 130);
+                    if (yVal > threshold) yVal = threshold;
+                    if (yVal < -threshold) yVal = -threshold;
+                }
+
+                const y = (yVal * (height / 2.6)) + (height / 2);
+                points.push(`${x},${y}`);
+            }
+
+            scopePath.setAttribute('d', `M${points.join(' L')}`);
+            scopeAngle += 0.20;
+
+            requestAnimationFrame(drawScope);
+        }
+    </script>
+</body>
+</html>
